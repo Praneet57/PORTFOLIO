@@ -95,29 +95,11 @@ export default function App() {
   const [form, setForm] = useState({ email: "", name: "", subject: "", message: "" });
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState(''); // '', 'success', 'error'
-  const [isChecking, setIsChecking] = useState(false);
-  const [resumeStatus, setResumeStatus] = useState(''); // '', 'checking', 'ready', 'error', 'notfound'
 
   const roles = ["Python Developer", "DevOps Engineer", "Backend Developer", "AI-Powered Developer"];
   const roleRef = useRef(0);
   const charRef = useRef(0);
   const deletingRef = useRef(false);
-
-  const checkResume = async () => {
-    setIsChecking(true);
-    setResumeStatus('checking');
-    try {
-      const response = await fetch('/Praneet_Resume.pdf', { method: 'HEAD' });
-      if (response.ok) {
-        setResumeStatus('ready');
-      } else {
-        setResumeStatus('notfound');
-      }
-    } catch (error) {
-      setResumeStatus('error');
-    }
-    setIsChecking(false);
-  };
 
   const viewResume = () => {
     window.open('/Praneet_Resume.pdf', '_blank');
@@ -186,7 +168,8 @@ export default function App() {
     return () => clearTimeout(t);
   }, []);
 
-  // ── Scroll spy ─────────────────────────────────────────────
+// ── Scroll spy ─────────────────────────────────────────────
+// eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) setActiveSection(e.target.id); }),
