@@ -96,7 +96,7 @@ export default function App() {
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState(''); // '', 'success', 'error'
 
-  const roles = ["Python Developer", "DevOps Engineer", "Backend Developer", "AI-Powered Developer"];
+  const roles = useMemo(() => ["Python Developer", "DevOps Engineer", "Backend Developer", "AI-Powered Developer"], []); // Stable for useEffect deps
   const roleRef = useRef(0);
   const charRef = useRef(0);
   const deletingRef = useRef(false);
@@ -142,7 +142,7 @@ export default function App() {
     }
   };
 
-  // ── Typewriter effect ──────────────────────────────────────
+// ── Typewriter effect ──────────────────────────────────────
   useEffect(() => {
     const tick = () => {
       const cur = roles[roleRef.current];
@@ -166,7 +166,7 @@ export default function App() {
     };
     const t = setTimeout(tick, 600);
     return () => clearTimeout(t);
-  }, []);
+  }, [roles]);
 
 // ── Scroll spy ─────────────────────────────────────────────
 // eslint-disable-next-line react-hooks/exhaustive-deps
